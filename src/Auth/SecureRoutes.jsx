@@ -1,7 +1,5 @@
 import React from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
-import Messenger from "../Views/Messenger";
-import Weather from "../Views/Weather";
+import { Outlet } from "react-router-dom";
 
 const SecureRoutes = props => {
     return (

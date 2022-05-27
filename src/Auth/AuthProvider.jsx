@@ -5,13 +5,13 @@ import AuthContext from "./AuthContext";
 const AuthProvider = props => {
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
-
     const login = (form, setFormErrors) => 
         axios.post('http://localhost:8000/api/users/login', form, {withCredentials:true})
         .then(res => {
             console.log("success", res);
             setUser(res.data.user);
             setAuthenticated(true);
+            return true;
         })
         .catch(err => {
             console.log('\n-----Error-----\n',err)
@@ -21,6 +21,7 @@ const AuthProvider = props => {
                     return {...f, [err + "Error"]:errors[err].message}
                 })
             }
+            return false;
         })
     const register = (form, setFormErrors) => 
         axios.post('http://localhost:8000/api/users/new', form, {withCredentials:true})
@@ -28,7 +29,6 @@ const AuthProvider = props => {
                 console.log("success", res);
                 setUser(res.data.user);
                 setAuthenticated(true);
-                console.log(user);
             })
             .catch(err => {
                 console.log('\n-----Error-----\n',err)

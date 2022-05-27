@@ -1,10 +1,8 @@
 import React, {useState, useEffect, useContext} from "react";
 import io from 'socket.io-client';
 import Chat from "../Components/Chat";
-import { print } from '../Accessories/LogFormatting';
-import Logout from "../Components/Logout";
 import AuthContext from "../Auth/AuthContext";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 const Messenger = props => {
     const [users, setUsers] = useState([]);
@@ -27,28 +25,22 @@ const Messenger = props => {
         );
         return () => socket.disconnect(true);
     }, [])
-    
-    const printState = () => {
-        console.log(users);
-        users.map((el, idx) => {
-            console.log('Stuff');
-            console.log(el);
-        })
-    }
 
     return (
         <>
             <Row className="justify-content-center">
-                <Col>
-                    <div className="display-6">List of users</div>
+                <Col md='4' className="text-start">
+                    <div className="lead">Users Online</div>
                     <ul className="list-unstyled">
                         {users.length > 0 ? users.map((el, idx) => <li key={idx}>{el.name}</li>)
-                            : <h1>No Users Online</h1>
+                            : <li>No Users Online</li>
                         }
                     </ul>
                 </Col>
+                <Col md='6'>
+                    <Chat msgs={msgs} setMsgs={setMsgs} socket={socket} />
+                </Col>
             </Row>
-            <Chat msgs={msgs} setMsgs={setMsgs} socket={socket} />
         </>
     )
 }

@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
-import axios from 'axios';
 import AuthContext from "../Auth/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = props => {
     const auth = useContext(AuthContext);
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
+    const nav = useNavigate();
+    const loc = useLocation();
+    const from = loc.state?.from?.pathname || '/';
 
     const [form, setForm] = useState({
         email:"",
@@ -15,12 +14,13 @@ const Login = props => {
     })
     const [formErrors, setFormErrors] = useState({});
 
-    const onSubmitHandler = async (e) => {
+    const onSubmitHandler = (e) => {
         e.preventDefault();
         setFormErrors({});
-        await auth.login(form, setFormErrors);
-        console.log(auth.user);
-        setTimeout(() => navigate(from, { replace: true }),3000);
+        auth.login(form, setFormErrors)
+            .then(res => {
+                if(res) nav(from,{replace:true});
+            })
     }
 
     return (

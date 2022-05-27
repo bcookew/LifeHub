@@ -22,30 +22,31 @@ const NavBar = props => {
                     <Nav className="me-auto">
                         
                             { loc.pathname !== '/'
-                            ? <LinkContainer className='nav-link' to='/'>
-                                <Nav.Link>Home</Nav.Link>
-                            </LinkContainer>
-                            : <LinkContainer className='nav-link' to='/in'>
-                                <Nav.Link>Dashboard</Nav.Link>
-                            </LinkContainer>
+                            ? <>
+                                <LinkContainer className='nav-link' to='/'>
+                                    <Nav.Link>Home</Nav.Link>
+                                </LinkContainer>
+                                <LinkContainer className='nav-link' to='/in/messenger'>
+                                    <Nav.Link>Messenger</Nav.Link>
+                                </LinkContainer>
+                                <LinkContainer className='nav-link' to='/in/weather'>
+                                    <Nav.Link>Weather</Nav.Link>
+                                </LinkContainer>
+                                </>
+                            :
+                                <LinkContainer className='nav-link' to='/in'>
+                                    <Nav.Link>Dashboard</Nav.Link>
+                                </LinkContainer>
                             }
-                        <LinkContainer className='nav-link' to='/in/messenger'>
-                            <Nav.Link>Messenger</Nav.Link>
-
-                        </LinkContainer>
                     </Nav>
                     <Nav>
                         {
                             auth.authenticated ? 
                             <>
+                                <Logout classes="nav-link my-auto" />
                                 <Navbar.Text>
                                     <em>Signed in as:</em> <span className="text-black">{auth.user.firstName}</span>
                                 </Navbar.Text>
-                                
-                                <Navbar.Text className="ms-2">
-                                    |
-                                </Navbar.Text>
-                                <Logout classes="nav-link my-auto" />
                             </>
                             :  <>
                                     <LinkContainer className='nav-link' to='/login'>
